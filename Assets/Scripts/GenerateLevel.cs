@@ -29,26 +29,26 @@ public class GenerateLevel : MonoBehaviour
                 var isEdge = x == 0 || y == 0 || x == Length - 1 || y == Length - 1;
                 var isColumn = x % 2 == 0 && y % 2 == 0;
 
-                //var border = 3;
-                //var isStartZoneA = x < border && y < border;
-                //var isStartZoneB = x < border && y >= Height - border;
-                //var isStartZoneC = x >= Length - border && y < border;
-                //var isStartZoneD = x >= Length - border && y >= Height - border;
+                var border = 3;
+                var isStartZoneA = x < border && y < border;
+                var isStartZoneB = x < border && y >= Height - border;
+                var isStartZoneC = x >= Length - border && y < border;
+                var isStartZoneD = x >= Length - border && y >= Height - border;
 
                 var prefab = Grass;
                 if (isEdge || isColumn)
                 {
                     prefab = Block;
                 }
-                //else if(isStartZoneA || isStartZoneB || isStartZoneC || isStartZoneD)
-                //{
-                //    prefab = Grass;
-                //}
-                //else if (Random.Range(0, 100) % 3 == 0)
-                //{
-                //    prefab = Crate;
-                //}
-                
+                else if (isStartZoneA || isStartZoneB || isStartZoneC || isStartZoneD)
+                {
+                    prefab = Grass;
+                }
+                else if (Random.Range(0, 100) % 3 == 0)
+                {
+                    prefab = Crate;
+                }
+
                 var tile = (GameObject)Instantiate(prefab, new Vector3(x, y, 50), Quaternion.identity);
                 _grid[x, y] = tile;
 
@@ -60,5 +60,10 @@ public class GenerateLevel : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public GameObject GetTile(float x, float y)
+    {
+        return _grid[Mathf.RoundToInt(x), Mathf.RoundToInt(y)];
     }
 }

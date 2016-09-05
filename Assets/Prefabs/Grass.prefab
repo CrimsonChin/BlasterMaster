@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012186581216}
   - 212: {fileID: 212000011484025062}
+  - 114: {fileID: 114000010016849406}
   m_Layer: 0
   m_Name: Grass
   m_TagString: Untagged
@@ -40,6 +41,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000010016849406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010245688556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d442b5d100243408edf2c81cdfade8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Destroyable: 0
 --- !u!212 &212000011484025062
 SpriteRenderer:
   m_ObjectHideFlags: 1
