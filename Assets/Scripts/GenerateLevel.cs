@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class GenerateLevel : MonoBehaviour
 {
@@ -18,18 +17,20 @@ public class GenerateLevel : MonoBehaviour
 
     private GameObject[,] _grid;
 
-    // Use this for initialization
+    public GameObject Camera;
+
     void Start()
     {
+        var parentGrid = new GameObject("Grid");
         _grid = new GameObject[Length, Height];
-        for (int y = 0; y < Height; y++)
+        for (var y = 0; y < Height; y++)
         {
-            for (int x = 0; x < Length; x++)
+            for (var x = 0; x < Length; x++)
             {
-                var isEdge = x == 0 || y == 0 || x == Length - 1 || y == Length - 1;
+                var isEdge = x == 0 || y == 0 || x == Length - 1 || y == Height - 1;
                 var isColumn = x % 2 == 0 && y % 2 == 0;
 
-                var border = 3;
+                const int border = 3;
                 var isStartZoneA = x < border && y < border;
                 var isStartZoneB = x < border && y >= Height - border;
                 var isStartZoneC = x >= Length - border && y < border;
@@ -49,17 +50,17 @@ public class GenerateLevel : MonoBehaviour
                     prefab = Crate;
                 }
 
-                var tile = (GameObject)Instantiate(prefab, new Vector3(x, y, 50), Quaternion.identity);
-                _grid[x, y] = tile;
-
+                AddTile(prefab, x, y, parentGrid.transform);
             }
         }
+
+        Camera.transform.position = new Vector3(Length / 2, Height / 2);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddTile(GameObject prefab, float x, float y, Transform parent = null)
     {
-
+        var tile = (GameObject) Instantiate(prefab, new Vector3(x, y, 50), Quaternion.identity, transform);
+        _grid[Mathf.RoundToInt(x), Mathf.RoundToInt(y)] = tile;
     }
 
     public GameObject GetTile(float x, float y)

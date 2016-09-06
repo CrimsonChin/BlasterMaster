@@ -14,12 +14,17 @@ namespace Assets.Scripts
         void Start()
         {
             _generateLevel = FindObjectOfType<GenerateLevel>();
+            Detonate();
         }
 
-        void Update()
+        public void Detonate()
         {
+            Detonate(DetonoteTime);
+        }
 
-            Invoke("Explode", DetonoteTime);
+        public void Detonate(float fuseTime)
+        {
+            Invoke("Explode", fuseTime);
         }
 
         public void Explode()
@@ -27,13 +32,23 @@ namespace Assets.Scripts
             Debug.Log(gameObject.transform.position);
 
             var pos = gameObject.transform.position;
-            GameObject topTile = _generateLevel.GetTile(pos.x, pos.y + 1);
-            if (topTile.GetComponent<Tile>().Destroyable)
-            {
-                Destroy(topTile);
-            }
+            DestroyTile(pos.x, pos.y + 1);
+            DestroyTile(pos.x, pos.y + -1);
+            DestroyTile(pos.x + 1, pos.y);
+            DestroyTile(pos.x - 1, pos.y);
 
             Destroy(gameObject);
+        }
+
+        private void DestroyTile(float x, float y)
+        {
+            var tileGameObject = _generateLevel.GetTile(x, y);
+            var tile = tileGameObject.GetComponent<Tile>();
+
+            if (tile != null && tile.Destroyable)
+            {
+                Destroy(tileGameObject);
+            }
         }
     }
 }

@@ -1,23 +1,28 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Tile : MonoBehaviour
 {
-        
     public bool Destroyable;
+    public GameObject DestroyedTile;
 
-    private GameObject _prefab;
+    private GenerateLevel _generateLevel;
+    private bool _isApplicationQuitting;
 
-    private Vector3 _position;
+    void Start()
+    {
+        _generateLevel = FindObjectOfType<GenerateLevel>();
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	    //Instantiate(prefab, _position, Quaternion.identity);
-	}
+    void OnApplicationQuit()
+    {
+        _isApplicationQuitting = true;
+    }
+
+    void OnDestroy()
+    {
+        if (_isApplicationQuitting || !Destroyable)
+            return;
+
+        _generateLevel.AddTile(DestroyedTile, transform.position.x, transform.position.y);
+    }
 }
