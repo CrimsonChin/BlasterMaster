@@ -14,7 +14,7 @@ namespace Assets.Scripts
         void Start()
         {
             _generateLevel = FindObjectOfType<GenerateLevel>();
-            Detonate();
+           // Detonate();
         }
 
         public void Detonate()
@@ -27,6 +27,7 @@ namespace Assets.Scripts
             Invoke("Explode", fuseTime);
         }
 
+        // used by animator
         public void Explode()
         {
             Debug.Log(gameObject.transform.position);

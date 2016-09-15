@@ -6,6 +6,6 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        Instantiate(Player, new Vector3(1, 1, 0), Quaternion.identity);
+        Instantiate(Player, new Vector3(1, 1, 50), Quaternion.identity);
     }
 }

@@ -59,7 +59,7 @@ public class GenerateLevel : MonoBehaviour
 
     public void AddTile(GameObject prefab, float x, float y, Transform parent = null)
     {
-        var tile = (GameObject) Instantiate(prefab, new Vector3(x, y, 50), Quaternion.identity, transform);
+        var tile = (GameObject) Instantiate(prefab, new Vector3(x, y, 100), Quaternion.identity, parent);
         _grid[Mathf.RoundToInt(x), Mathf.RoundToInt(y)] = tile;
     }
 
