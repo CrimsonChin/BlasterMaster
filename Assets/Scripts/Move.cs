@@ -37,7 +37,7 @@ public class Move : MonoBehaviour
             _rigidbody.MovePosition(_rigidbody.position + new Vector2(x,y) * Time.deltaTime * Speed);
         }
 
-        _animator.SetBool("Walk", isWalking);
+        _animator.SetBool("IsWalking", isWalking);
     }
 
     private void Flip()

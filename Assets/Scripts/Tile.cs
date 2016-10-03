@@ -20,6 +20,14 @@ public class Tile : MonoBehaviour
         _isApplicationQuitting = true;
     }
 
+    public void AttemptDestroy()
+    {
+        if (_isApplicationQuitting || !Destroyable)
+            return;
+
+        Destroy(gameObject);
+    }
+
     void OnDestroy()
     {
         if (_isApplicationQuitting || !Destroyable)

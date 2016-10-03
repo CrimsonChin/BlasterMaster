@@ -13,8 +13,6 @@ public class BoardManager : MonoBehaviour
 
     public GameObject Crate;
 
-    public GameObject A;
-
     private GameObject[,] _grid;
 
     public GameObject Camera;
@@ -45,7 +43,7 @@ public class BoardManager : MonoBehaviour
                 {
                     prefab = Grass;
                 }
-                else if (Random.Range(0, 100) % 3 == 0)
+                else if (Random.Range(0, 100) % 7 == 0)
                 {
                     prefab = Crate;
                 }
@@ -59,18 +57,28 @@ public class BoardManager : MonoBehaviour
 
     public void AddTile(GameObject prefab, float x, float y, Transform parent = null)
     {
-        var tile = (GameObject) Instantiate(prefab, new Vector3(x, y, 100), Quaternion.identity, parent);
+        var tile = (GameObject)Instantiate(prefab, new Vector3(x, y, 100), Quaternion.identity, parent);
         _grid[Mathf.RoundToInt(x), Mathf.RoundToInt(y)] = tile;
     }
 
     public GameObject GetTileGameObject(float x, float y)
-    {
+    { 
+        if (x > Length - 1 || x < 0 || y > Height - 1 || y < 0)
+        {
+            return null;
+        }
+
         return _grid[Mathf.RoundToInt(x), Mathf.RoundToInt(y)];
     }
 
-
     public Tile GetTile(float x, float y)
     {
-        return GetTileGameObject(x, y).GetComponent<Tile>();
+        var gameObject = GetTileGameObject(x, y);
+        if (gameObject == null)
+        {
+            return null;
+        }
+
+        return gameObject.GetComponent<Tile>();
     }
 }

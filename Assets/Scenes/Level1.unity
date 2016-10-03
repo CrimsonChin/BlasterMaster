@@ -169,7 +169,6 @@ MonoBehaviour:
   Block: {fileID: 1000010346493832, guid: a65063bf162da124db6a7e39dec9b175, type: 2}
   Grass: {fileID: 1000010245688556, guid: a775a63d718f5de45bf5eb6e3d614761, type: 2}
   Crate: {fileID: 1000012513445820, guid: 587a8c2b8dea16849880ed9d65772021, type: 2}
-  A: {fileID: 1000012926657508, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
   Camera: {fileID: 1245316147}
 --- !u!4 &999998495
 Transform:
@@ -196,6 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1000012926657508, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
+  Troll: {fileID: 1000013151881412, guid: 069addbbc968ad84e92356838b52352e, type: 2}
 --- !u!1 &1059390060 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000012926657508, guid: c5e3f18ae53d94946a764ba9e69e5ce1,
