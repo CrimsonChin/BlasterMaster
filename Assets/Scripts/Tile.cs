@@ -1,16 +1,18 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts;
+using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+    public TileType TileType;
     public bool Destroyable;
     public GameObject DestroyedTile;
 
-    private GenerateLevel _generateLevel;
+    private BoardManager _boardManager;
     private bool _isApplicationQuitting;
 
     void Start()
     {
-        _generateLevel = FindObjectOfType<GenerateLevel>();
+        _boardManager = FindObjectOfType<BoardManager>();
     }
 
     void OnApplicationQuit()
@@ -23,6 +25,6 @@ public class Tile : MonoBehaviour
         if (_isApplicationQuitting || !Destroyable)
             return;
 
-        _generateLevel.AddTile(DestroyedTile, transform.position.x, transform.position.y);
+        _boardManager.AddTile(DestroyedTile, transform.position.x, transform.position.y);
     }
 }

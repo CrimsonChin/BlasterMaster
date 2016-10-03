@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d442b5d100243408edf2c81cdfade8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TileType: 2
   Destroyable: 1
   DestroyedTile: {fileID: 1000010420051822, guid: f80887ac75fe4704a9747af5c50977c1,
     type: 2}

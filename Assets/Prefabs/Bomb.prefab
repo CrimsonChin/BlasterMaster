@@ -71,6 +71,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DetonoteTime: 3
+  Power: 1
+  Middle: {fileID: 1000010683203234, guid: ed7302be3531df141bbfa33448d85ffa, type: 2}
+  Top: {fileID: 1000013268159172, guid: 17a50446271336340b4361d418a326aa, type: 2}
+  Bottom: {fileID: 1000012702653428, guid: 733c0182368de3841a1d8cf9c419e88c, type: 2}
+  Left: {fileID: 1000012163151000, guid: f09307340860f014cab37059be53411c, type: 2}
+  Right: {fileID: 1000011216546350, guid: dacd59dd1ba07e947a38681f70e95ea2, type: 2}
+  Horizontal: {fileID: 1000012397627240, guid: f6ef30ba45afd28488e816bfb091008a, type: 2}
+  Vertical: {fileID: 1000013307140322, guid: 7436b75d4ed72da47bb10b8b18078cfa, type: 2}
 --- !u!212 &212000010041308890
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GenerateLevel : MonoBehaviour
+public class BoardManager : MonoBehaviour
 {
 
     public int Length = 21;
@@ -63,8 +63,14 @@ public class GenerateLevel : MonoBehaviour
         _grid[Mathf.RoundToInt(x), Mathf.RoundToInt(y)] = tile;
     }
 
-    public GameObject GetTile(float x, float y)
+    public GameObject GetTileGameObject(float x, float y)
     {
         return _grid[Mathf.RoundToInt(x), Mathf.RoundToInt(y)];
+    }
+
+
+    public Tile GetTile(float x, float y)
+    {
+        return GetTileGameObject(x, y).GetComponent<Tile>();
     }
 }
