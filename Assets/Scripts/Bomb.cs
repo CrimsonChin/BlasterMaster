@@ -23,100 +23,43 @@ namespace Assets.Scripts
         // used by animator
         public void Explode()
         {
-            Explode(gameObject.transform.position.x, gameObject.transform.position.y);
+            Explode(gameObject.transform.position);
             Destroy(gameObject);
         }
 
-        private void Explode(float x, float y)
+        private void GenerateBombTrail(Vector2 position, Vector2 direction, GameObject blastExtension, GameObject blastEnd)
         {
-            Instantiate(Middle, new Vector3(x, y, 10), Quaternion.identity);
-
-            // handle Right
             for (int i = 1; i <= Power; i++)
             {
-                Tile thisTile = _boardManager.GetTile(x + i, y);
-                if (thisTile.TileType == TileType.Obstacle)
+                var adjacentTileVector = position + (direction * i);
+                var adjacentTile = _boardManager.GetTile(adjacentTileVector);
+                if (adjacentTile.TileType == TileType.Obstacle)
                 {
                     break;
                 }
 
                 if (i == Power)
                 {
-                    Instantiate(Right, new Vector3(x + i, y, 10), Quaternion.identity);
-                    thisTile.AttemptDestroy();
+                    Instantiate(blastEnd, new Vector3(adjacentTileVector.x, adjacentTileVector.y, 10), Quaternion.identity);
+                    adjacentTile.AttemptDestroy();
                     break;
                 }
 
-               
-                Tile tile = _boardManager.GetTile(x + i + 1, y); // look ahead
-                Instantiate(tile.TileType == TileType.Obstacle ? Right : Horizontal, new Vector3(x + i, y, 10), Quaternion.identity);
-                thisTile.AttemptDestroy();
+                var nextTile = _boardManager.GetTile(adjacentTileVector + direction);
+                var tilePrefab = nextTile.TileType == TileType.Obstacle ? blastEnd : blastExtension;
+                Instantiate(tilePrefab, new Vector3(adjacentTileVector.x, adjacentTileVector.y, 10), Quaternion.identity);
+                adjacentTile.AttemptDestroy();
             }
+        }
 
-            // left
-            for (int i = 1; i <= Power; i++)
-            {
-                Tile thisTile = _boardManager.GetTile(x - i, y);
-                if (thisTile.TileType == TileType.Obstacle)
-                {
-                    break;
-                }
+        private void Explode(Vector2 position)
+        {
+            Instantiate(Middle, new Vector3(position.x, position.y, 10), Quaternion.identity);
 
-                if (i == Power)
-                {
-                    Instantiate(Left, new Vector3(x - i, y, 10), Quaternion.identity);
-                    thisTile.AttemptDestroy();
-                    break;
-                }
-
-                Tile tile = _boardManager.GetTile(x - i - 1, y); // look ahead
-                Instantiate(tile.TileType == TileType.Obstacle ? Left : Horizontal, new Vector3(x - i, y, 10), Quaternion.identity);
-                thisTile.AttemptDestroy();
-
-            }
-
-            // top
-            for (int i = 1; i <= Power; i++)
-            {
-                Tile thisTile = _boardManager.GetTile(x, y + i);
-                if (thisTile.TileType == TileType.Obstacle)
-                {
-                    break;
-                }
-
-                if (i == Power)
-                {
-                    Instantiate(Top, new Vector3(x, y + i, 10), Quaternion.identity);
-                    thisTile.AttemptDestroy();
-                    break;
-                }
-
-                Tile tile = _boardManager.GetTile(x, y + i + 1); // look ahead
-                Instantiate(tile.TileType == TileType.Obstacle ? Top : Vertical, new Vector3(x, y + i, 10), Quaternion.identity);
-                thisTile.AttemptDestroy();
-            }
-
-            // bottom
-            for (int i = 1; i <= Power; i++)
-            {
-                Tile thisTile = _boardManager.GetTile(x, y - i);
-                if (thisTile.TileType == TileType.Obstacle)
-                {
-                    break;
-                }
-
-                if (i == Power)
-                {
-                    Instantiate(Bottom, new Vector3(x, y - i, 10), Quaternion.identity);
-                    thisTile.AttemptDestroy();
-                    break;
-                }
-
-                Tile tile = _boardManager.GetTile(x, y - i - 1); // look ahead
-                Instantiate(tile.TileType == TileType.Obstacle ? Bottom : Vertical, new Vector3(x, y - i, 10), Quaternion.identity);
-                thisTile.AttemptDestroy();
-
-            }
+            GenerateBombTrail(position, Vector2.up, Vertical, Top);
+            GenerateBombTrail(position, Vector2.right, Horizontal, Right);
+            GenerateBombTrail(position, Vector2.down, Vertical, Bottom);
+            GenerateBombTrail(position, Vector2.left, Horizontal, Left);
         }
     }
 }

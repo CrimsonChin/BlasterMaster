@@ -81,4 +81,9 @@ public class BoardManager : MonoBehaviour
 
         return gameObject.GetComponent<Tile>();
     }
+
+    public Tile GetTile(Vector2 position)
+    {
+        return GetTile(position.x, position.y);
+    }
 }
