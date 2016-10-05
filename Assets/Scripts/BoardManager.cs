@@ -2,10 +2,9 @@
 
 public class BoardManager : MonoBehaviour
 {
+    public int Length = 5;
 
-    public int Length = 21;
-
-    public int Height = 21;
+    public int Height = 5;
 
     public GameObject Block;
 
@@ -13,19 +12,19 @@ public class BoardManager : MonoBehaviour
 
     public GameObject Crate;
 
-    private GameObject[,] _grid;
+    private GameObject[,] _board;
 
     public GameObject Camera;
 
     void Start()
     {
-        var parentGrid = new GameObject("Grid");
-        _grid = new GameObject[Length, Height];
-        for (var y = 0; y < Height; y++)
+        var parentGrid = new GameObject("Board");
+        _board = new GameObject[Length + 2, Height + 2];
+        for (var y = 0; y < Height + 2; y++)
         {
-            for (var x = 0; x < Length; x++)
+            for (var x = 0; x < Length + 2; x++)
             {
-                var isEdge = x == 0 || y == 0 || x == Length - 1 || y == Height - 1;
+                var isEdge = x == 0 || y == 0 || x == Length + 1 || y == Height + 1;
                 var isColumn = x % 2 == 0 && y % 2 == 0;
 
                 const int border = 3;
@@ -52,38 +51,28 @@ public class BoardManager : MonoBehaviour
             }
         }
 
-        Camera.transform.position = new Vector3(Length / 2, Height / 2);
+        Camera.transform.position = new Vector3(Length / 2f, Height / 2f);
     }
 
-    public void AddTile(GameObject prefab, float x, float y, Transform parent = null)
+    public void AddTile(GameObject prefab, int x, int y, Transform parent = null)
     {
         var tile = (GameObject)Instantiate(prefab, new Vector3(x, y, 100), Quaternion.identity, parent);
-        _grid[Mathf.RoundToInt(x), Mathf.RoundToInt(y)] = tile;
+        _board[x, y] = tile;
     }
 
-    public GameObject GetTileGameObject(float x, float y)
+    private GameObject GetTileGameObject(float x, float y)
     { 
         if (x > Length - 1 || x < 0 || y > Height - 1 || y < 0)
         {
             return null;
         }
 
-        return _grid[Mathf.RoundToInt(x), Mathf.RoundToInt(y)];
-    }
-
-    public Tile GetTile(float x, float y)
-    {
-        var gameObject = GetTileGameObject(x, y);
-        if (gameObject == null)
-        {
-            return null;
-        }
-
-        return gameObject.GetComponent<Tile>();
+        return _board[Mathf.RoundToInt(x), Mathf.RoundToInt(y)];
     }
 
     public Tile GetTile(Vector2 position)
     {
-        return GetTile(position.x, position.y);
+        var tileGameObject = GetTileGameObject(position.x, position.y);
+        return tileGameObject == null ? null : tileGameObject.GetComponent<Tile>();
     }
 }

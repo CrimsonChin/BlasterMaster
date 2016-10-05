@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts;
 using System.Linq;
@@ -91,15 +90,15 @@ public class Troll : MonoBehaviour
         return adjacentPaths;
     }
 
-    private void AddPathIfAvailable(Vector2 currentPosition, Vector2 postentialDestination, IList<Vector2> adjacentPaths)
+    private void AddPathIfAvailable(Vector2 currentPosition, Vector2 direction, IList<Vector2> adjacentPaths)
     {
-        if (IsPath(currentPosition + postentialDestination))
-            adjacentPaths.Add(postentialDestination);
+        if (IsPath(currentPosition + direction))
+            adjacentPaths.Add(direction);
     }
 
     private bool IsPath(Vector2 location)
     {
-        var tile = _boardManager.GetTile(location.x, location.y);
+        var tile = _boardManager.GetTile(location);
         return tile.TileType == TileType.Path;
     }
 }

@@ -33,6 +33,6 @@ public class Tile : MonoBehaviour
         if (_isApplicationQuitting || !Destroyable)
             return;
 
-        _boardManager.AddTile(DestroyedTile, transform.position.x, transform.position.y);
+        _boardManager.AddTile(DestroyedTile, Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
     }
 }
