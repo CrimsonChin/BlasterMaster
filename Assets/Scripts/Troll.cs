@@ -99,6 +99,6 @@ public class Troll : MonoBehaviour
     private bool IsPath(Vector2 location)
     {
         var tile = _boardManager.GetTile(location);
-        return tile.TileType == TileType.Path;
+        return tile != null && tile.TileType == TileType.Path;
     }
 }
