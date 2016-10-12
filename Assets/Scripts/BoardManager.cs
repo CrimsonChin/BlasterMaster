@@ -62,11 +62,10 @@ public class BoardManager : MonoBehaviour
 
     private GameObject GetTileGameObject(float x, float y)
     { 
-        if (x > Length - 1 || x < 0 || y > Height - 1 || y < 0)
+        if (x > Length + 1 || x < 0 || y > Height + 1|| y < 0)
         {
             return null;
         }
-
         return _board[Mathf.RoundToInt(x), Mathf.RoundToInt(y)];
     }
 
