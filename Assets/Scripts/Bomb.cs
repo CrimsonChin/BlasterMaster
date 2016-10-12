@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.Serialization;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -14,10 +15,12 @@ namespace Assets.Scripts
         public GameObject Right;
         public GameObject Horizontal;
         public GameObject Vertical;
+        private EnemyManager _enemyManager;
 
         void Start()
         {
             _boardManager = FindObjectOfType<BoardManager>();
+            _enemyManager = FindObjectOfType<EnemyManager>();
         }
 
         // used by animator
@@ -42,6 +45,7 @@ namespace Assets.Scripts
                 {
                     Instantiate(blastEnd, new Vector3(adjacentTileVector.x, adjacentTileVector.y, 10), Quaternion.identity);
                     adjacentTile.AttemptDestroy();
+                    _enemyManager.DestroyEnemyAtLocation(adjacentTileVector);
                     break;
                 }
 
@@ -49,12 +53,14 @@ namespace Assets.Scripts
                 var tilePrefab = nextTile.TileType == TileType.Obstacle ? blastEnd : blastExtension;
                 Instantiate(tilePrefab, new Vector3(adjacentTileVector.x, adjacentTileVector.y, 10), Quaternion.identity);
                 adjacentTile.AttemptDestroy();
+                _enemyManager.DestroyEnemyAtLocation(adjacentTileVector);
             }
         }
 
         private void Explode(Vector2 position)
         {
             Instantiate(Middle, new Vector3(position.x, position.y, 10), Quaternion.identity);
+            _enemyManager.DestroyEnemyAtLocation(new Vector2(position.x, position.y));
 
             GenerateBombTrail(position, Vector2.up, Vertical, Top);
             GenerateBombTrail(position, Vector2.right, Horizontal, Right);

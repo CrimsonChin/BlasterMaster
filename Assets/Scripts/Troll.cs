@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts;
 using System.Linq;
+using System.Security.Policy;
 
 public class Troll : MonoBehaviour
 {
@@ -100,5 +101,10 @@ public class Troll : MonoBehaviour
     {
         var tile = _boardManager.GetTile(location);
         return tile != null && tile.TileType == TileType.Path;
+    }
+
+    public Vector2 GetRoundedPosition()
+    {
+        return new Vector2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
     }
 }
