@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a39a488e3bdebc742ad33b3b71850df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Power: 1
+  Power: 2
   Middle: {fileID: 1000010683203234, guid: ed7302be3531df141bbfa33448d85ffa, type: 2}
   Top: {fileID: 1000013268159172, guid: 17a50446271336340b4361d418a326aa, type: 2}
   Bottom: {fileID: 1000012702653428, guid: 733c0182368de3841a1d8cf9c419e88c, type: 2}
