@@ -1,21 +1,25 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using Assets.Scripts;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
+using Assets.Scripts;
+using UnityEngine;
 
 public class Troll : MonoBehaviour
 {
+    private const string AnimatorMoveX = "MoveX";
+    private const string AnimatorMoveY = "MoveY";
+    private const string AnimatorIsWalking = "IsWalking";
+
     private const float Speed = 0.02f;
     private Animator _animator;
+    private BoardManager _boardManager;
+    private Vector2 _direction;
+    private float _idleTime;
+    private bool _isDead;
+    private bool _isMoving;
     private SpriteRenderer _spriteRenderer;
     private Vector2 _target;
-    private Vector2 _direction;
-    private bool _isMoving = false;
-    private float _idleTime = 0.0f;
-    private BoardManager _boardManager;
 
-    void Start()
+    private void Start()
     {
         _target = transform.position;
 
@@ -24,10 +28,15 @@ public class Troll : MonoBehaviour
         _boardManager = FindObjectOfType<BoardManager>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
+        if (_isDead)
+        {
+            return;
+        }
+
         Vector2 position = transform.position;
-        if (_isMoving == true)
+        if (_isMoving)
         {
             if (position == _target)
             {
@@ -36,7 +45,7 @@ public class Troll : MonoBehaviour
             }
             else
             {
-                Vector2 moveToward = Vector2.MoveTowards(position, _target, Speed);
+                var moveToward = Vector2.MoveTowards(position, _target, Speed);
                 transform.position = new Vector3(moveToward.x, moveToward.y, transform.position.z);
             }
         }
@@ -46,13 +55,13 @@ public class Troll : MonoBehaviour
             {
                 --_idleTime;
 
-                _animator.SetFloat("MoveX", 0);
-                _animator.SetFloat("MoveY", -1);
+                _animator.SetFloat(AnimatorMoveX, 0);
+                _animator.SetFloat(AnimatorMoveY, -1);
             }
             else
             {
                 var paths = GetAdjacentPaths();
-                _direction = paths.ElementAt(Random.Range(0, paths.Count()));
+                _direction = paths.ElementAt(Random.Range(0, paths.Count));
                 _target = position + _direction;
 
                 if (_direction == Vector2.left && !_spriteRenderer.flipX
@@ -61,13 +70,13 @@ public class Troll : MonoBehaviour
                     Flip();
                 }
 
-                _animator.SetFloat("MoveX", _direction.x);
-                _animator.SetFloat("MoveY", _direction.y);
+                _animator.SetFloat(AnimatorMoveX, _direction.x);
+                _animator.SetFloat(AnimatorMoveY, _direction.y);
                 _isMoving = true;
             }
         }
 
-        _animator.SetBool("IsWalking", _isMoving);
+        _animator.SetBool(AnimatorIsWalking, _isMoving);
     }
 
     private void Flip()
@@ -77,7 +86,7 @@ public class Troll : MonoBehaviour
 
     private List<Vector2> GetAdjacentPaths()
     {
-        List<Vector2> adjacentPaths = new List<Vector2>();
+        var adjacentPaths = new List<Vector2>();
 
         Vector2 currentPosition = transform.position;
         currentPosition.x = Mathf.Round(currentPosition.x);
@@ -106,5 +115,22 @@ public class Troll : MonoBehaviour
     public Vector2 GetRoundedPosition()
     {
         return new Vector2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
+    }
+
+    public void Die()
+    {
+        _isDead = true;
+
+        _animator.SetBool(AnimatorIsWalking, false);
+        _animator.SetFloat(AnimatorMoveX, 0);
+        _animator.SetFloat(AnimatorMoveY, -1);
+
+        InvokeRepeating("Flash", 0f, 0.1f);
+        Destroy(gameObject, 1f);
+    }
+
+    public void Flash()
+    {
+        _spriteRenderer.enabled = !_spriteRenderer.enabled;
     }
 }

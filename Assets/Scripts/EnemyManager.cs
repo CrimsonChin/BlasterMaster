@@ -31,7 +31,7 @@ public class EnemyManager : MonoBehaviour
             if (enemyScript.GetRoundedPosition() == location)
             {
                 Enemies.Remove(enemy);
-                Destroy(enemy);
+                enemyScript.Die();
             }
         }
     }

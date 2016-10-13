@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c7a0ede19b4ee646b9693f829faea1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Length: 30
+  Length: 15
   Height: 15
   Block: {fileID: 1000010346493832, guid: a65063bf162da124db6a7e39dec9b175, type: 2}
   Grass: {fileID: 1000010245688556, guid: a775a63d718f5de45bf5eb6e3d614761, type: 2}
