@@ -1,5 +1,4 @@
-﻿using System.Runtime.Serialization;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -16,11 +15,13 @@ namespace Assets.Scripts
         public GameObject Horizontal;
         public GameObject Vertical;
         private EnemyManager _enemyManager;
+        private Player _player;
 
         void Start()
         {
             _boardManager = FindObjectOfType<BoardManager>();
             _enemyManager = FindObjectOfType<EnemyManager>();
+            _player = FindObjectOfType<Player>();
         }
 
         // used by animator
@@ -28,6 +29,7 @@ namespace Assets.Scripts
         {
             Explode(gameObject.transform.position);
             Destroy(gameObject);
+            _player.ActiveBombs--;
         }
 
         private void GenerateBombTrail(Vector2 position, Vector2 direction, GameObject blastExtension, GameObject blastEnd)

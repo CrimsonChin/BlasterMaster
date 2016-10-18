@@ -25,9 +25,10 @@ GameObject:
   - 50: {fileID: 50000010724100726}
   - 58: {fileID: 58000011368229918}
   - 114: {fileID: 114000010309572436}
-  m_Layer: 0
+  - 114: {fileID: 114000012787077554}
+  m_Layer: 8
   m_Name: Man
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +105,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eee5a34f380d5b46bbca6bb1cb36b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxDroppedBombs: 0
+  DroppedBombs: 0
   Bomb: {fileID: 1000011054544336, guid: 67382977ec6a85c418e8ee376cfb089e, type: 2}
+--- !u!114 &114000012787077554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012926657508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd905a8680f6d424684a07ae39fe5361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 3
+  MaxBombCount: 1
+  ExplostionPower: 1
+  ActiveBombs: 0
 --- !u!114 &114000013508124700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,7 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74672fbf6fa2baf4fb85e90d5a89bcd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
 --- !u!212 &212000013425721260
 SpriteRenderer:
   m_ObjectHideFlags: 1

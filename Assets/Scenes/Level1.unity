@@ -90,52 +90,6 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &899164160
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4000013627159908, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 1.4799459
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013627159908, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 3.0375705
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013627159908, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013627159908, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013627159908, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013627159908, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013627159908, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013627159908, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000012926657508, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &999998493
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +137,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!114 &999998496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,23 +163,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Troll: {fileID: 1000013151881412, guid: 069addbbc968ad84e92356838b52352e, type: 2}
   Enemies: []
---- !u!1 &1059390060 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000012926657508, guid: c5e3f18ae53d94946a764ba9e69e5ce1,
-    type: 2}
-  m_PrefabInternal: {fileID: 899164160}
---- !u!114 &1059390061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1059390060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd905a8680f6d424684a07ae39fe5361, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Control: 0
 --- !u!1 &1245316147
 GameObject:
   m_ObjectHideFlags: 0
