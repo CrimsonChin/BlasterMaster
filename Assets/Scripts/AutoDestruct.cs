@@ -6,8 +6,4 @@ public class AutoDestruct : MonoBehaviour
     {
         Destroy(gameObject, 0.1f);
     }
-
-    void Update()
-    {
-    }
 }

@@ -24,7 +24,7 @@ namespace Assets.Scripts
             _player = FindObjectOfType<Player>();
         }
 
-        // used by animator
+        // triggered by animator at the end of the animation
         public void Explode()
         {
             Explode(gameObject.transform.position);
@@ -36,23 +36,20 @@ namespace Assets.Scripts
         {
             for (int i = 1; i <= Power; i++)
             {
-                var adjacentTileVector = position + (direction * i);
+                var adjacentTileVector = position + direction * i;
                 var adjacentTile = _boardManager.GetTile(adjacentTileVector);
                 if (adjacentTile.TileType == TileType.Obstacle)
                 {
                     break;
                 }
 
-                if (i == Power)
+                GameObject tilePrefab = blastEnd;
+                if (i != Power)
                 {
-                    Instantiate(blastEnd, new Vector3(adjacentTileVector.x, adjacentTileVector.y, 10), Quaternion.identity);
-                    adjacentTile.AttemptDestroy();
-                    _enemyManager.DestroyEnemyAtLocation(adjacentTileVector);
-                    break;
+                    var nextTile = _boardManager.GetTile(adjacentTileVector + direction);
+                    tilePrefab = nextTile.TileType == TileType.Obstacle ? blastEnd : blastExtension;
                 }
 
-                var nextTile = _boardManager.GetTile(adjacentTileVector + direction);
-                var tilePrefab = nextTile.TileType == TileType.Obstacle ? blastEnd : blastExtension;
                 Instantiate(tilePrefab, new Vector3(adjacentTileVector.x, adjacentTileVector.y, 10), Quaternion.identity);
                 adjacentTile.AttemptDestroy();
                 _enemyManager.DestroyEnemyAtLocation(adjacentTileVector);
