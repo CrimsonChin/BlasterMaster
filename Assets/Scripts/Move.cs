@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Move : MonoBehaviour
 {
@@ -7,9 +6,9 @@ public class Move : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
     private Player _player;
+    private bool _isDead;
 
-    // Use this for initialization
-    void Start()
+    public void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -18,9 +17,13 @@ public class Move : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
+        if (_isDead)
+        {
+            return;
+        }
+
         var x = Input.GetAxisRaw("Horizontal");
         var y = Input.GetAxisRaw("Vertical");
 
@@ -44,5 +47,34 @@ public class Move : MonoBehaviour
     private void Flip()
     {
         _spriteRenderer.flipX = !_spriteRenderer.flipX;
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Explosion"))
+        {
+            Die();
+        }
+    }
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.transform.CompareTag("Enemy"))
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        _isDead = true;
+        GetComponent<Collider2D>().enabled = false;
+
+        InvokeRepeating("Flash", 0f, 0.1f);
+        Destroy(gameObject, 1f);
+    }
+
+    private void Flash()
+    {
+        _spriteRenderer.enabled = !_spriteRenderer.enabled;
     }
 }

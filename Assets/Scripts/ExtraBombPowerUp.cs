@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class ExtraBombPowerUp : MonoBehaviour
 {
 
     public int BombIncrement;
 
-    void OnTriggerEnter2D(Collider2D collider)
+    public void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.tag == "Player")
         {

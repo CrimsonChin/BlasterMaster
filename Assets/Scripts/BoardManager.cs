@@ -56,22 +56,7 @@ public class BoardManager : MonoBehaviour
 
     public void AddTile(GameObject prefab, int x, int y, Transform parent = null)
     {
-        var tile = (GameObject)Instantiate(prefab, new Vector3(x, y, 100), Quaternion.identity, parent);
+        var tile = Instantiate(prefab, new Vector3(x, y, 100), Quaternion.identity, parent);
         _board[x, y] = tile;
-    }
-
-    private GameObject GetTileGameObject(float x, float y)
-    { 
-        if (x > Length + 1 || x < 0 || y > Height + 1|| y < 0)
-        {
-            return null;
-        }
-        return _board[Mathf.RoundToInt(x), Mathf.RoundToInt(y)];
-    }
-
-    public Tile GetTile(Vector2 position)
-    {
-        var tileGameObject = GetTileGameObject(position.x, position.y);
-        return tileGameObject == null ? null : tileGameObject.GetComponent<Tile>();
     }
 }

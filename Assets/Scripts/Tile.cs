@@ -1,38 +1,35 @@
-﻿using Assets.Scripts;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Lootable))]
 public class Tile : MonoBehaviour
 {
-    public TileType TileType;
     public bool Destroyable;
-    public GameObject DestroyedTile;
-
-    private BoardManager _boardManager;
-    private bool _isApplicationQuitting;
-
-    void Start()
-    {
-        _boardManager = FindObjectOfType<BoardManager>();
-    }
-
-    void OnApplicationQuit()
-    {
-        _isApplicationQuitting = true;
-    }
 
     public void AttemptDestroy()
     {
-        if (_isApplicationQuitting || !Destroyable)
+        if (!Destroyable)
             return;
 
-        Destroy(gameObject);
-    }
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = false;
+        }
 
-    void OnDestroy()
-    {
-        if (_isApplicationQuitting || !Destroyable)
-            return;
+        var boxCollider2D = GetComponent<BoxCollider2D>();
+        if (boxCollider2D != null)
+        {
+            boxCollider2D.enabled = false;
+        }
 
-        _boardManager.AddTile(DestroyedTile, Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
+        var lootable = GetComponent<Lootable>();
+        if (lootable)
+        {
+            lootable.GenerateLoot();
+        }
+
+        Destroyable = false;
     }
 }

@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class SpeedPowerUp : MonoBehaviour
 {
     public int Speed;
 
-    void OnTriggerEnter2D(Collider2D collider)
+    public void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.tag == "Player")
         {

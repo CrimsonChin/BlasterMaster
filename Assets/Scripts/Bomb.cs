@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     class Bomb : MonoBehaviour
     {
-        private BoardManager _boardManager;
+        public float ExplodeTime;
+
         public int Power = 1;
 
         public GameObject Middle;
@@ -14,24 +16,103 @@ namespace Assets.Scripts
         public GameObject Right;
         public GameObject Horizontal;
         public GameObject Vertical;
-        private EnemyManager _enemyManager;
+
+        public LayerMask ObstacleLayer;
+
         private Player _player;
+        private CircleCollider2D _collider;
 
-        void Start()
+        private bool _exploded;
+
+        public void Start()
         {
-            _boardManager = FindObjectOfType<BoardManager>();
-            _enemyManager = FindObjectOfType<EnemyManager>();
             _player = FindObjectOfType<Player>();
+
+            _collider = GetComponent<CircleCollider2D>();
+
+            Invoke("Detonate", ExplodeTime);
         }
 
-        // triggered by animator at the end of the animation
-        public void Explode()
+        public void OnTriggerEnter2D(Collider2D other)
         {
-            Explode(gameObject.transform.position);
-            Destroy(gameObject);
-            _player.ActiveBombs--;
+            if (!_exploded && other.CompareTag("Explosion"))
+            {
+                CancelInvoke("Detonate");
+                Detonate();
+            }
         }
 
+        public void OnTriggerExit2D(Collider2D col)
+        {
+            _collider.isTrigger = false;
+        }
+
+        private IEnumerator CreateExplosions(Vector2 direction)
+        {
+            for (int i = 1; i <= Power; i++)
+            {
+                Vector2 position = transform.position;
+
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, i, ObstacleLayer);
+                if (!hit.collider)
+                {
+                    Vector3 a = position + direction * i;
+                    a.z = 10;
+                    var prefab = GetExplosionPrefab(direction, i == Power);
+                    Instantiate(prefab, a, Quaternion.identity);
+                }
+                else
+                {
+                    var tile = hit.transform.GetComponent<Tile>();
+                    if (tile != null && tile.Destroyable)
+                    {
+                        tile.AttemptDestroy();
+                    }
+                    break;
+                }
+
+                yield return new WaitForSeconds(0);
+            }
+        }
+
+        private void Detonate()
+        {
+            _player.ActiveBombs--;
+            _exploded = true;
+
+            GetComponent<SpriteRenderer>().enabled = false;
+
+            Instantiate(Middle, transform.position, Quaternion.identity);
+            StartCoroutine(CreateExplosions(Vector2.right));
+            StartCoroutine(CreateExplosions(Vector2.down));
+            StartCoroutine(CreateExplosions(Vector2.up));
+            StartCoroutine(CreateExplosions(Vector2.left));
+
+            Destroy(gameObject, 1f);
+        }
+
+        private GameObject GetExplosionPrefab(Vector2 direction, bool isEnd)
+        {
+            if (direction == Vector2.up)
+            {
+                return isEnd ? Top : Vertical;
+            }
+
+            if (direction == Vector2.down)
+            {
+                return isEnd ? Bottom : Vertical;
+            }
+
+            if (direction == Vector2.left)
+            {
+                return isEnd ? Left : Horizontal;
+            }
+
+            //right
+            return isEnd ? Right : Horizontal;
+        }
+
+        /*
         private void GenerateBombTrail(Vector2 position, Vector2 direction, GameObject blastExtension, GameObject blastEnd)
         {
             for (int i = 1; i <= Power; i++)
@@ -66,5 +147,6 @@ namespace Assets.Scripts
             GenerateBombTrail(position, Vector2.down, Vertical, Bottom);
             GenerateBombTrail(position, Vector2.left, Horizontal, Left);
         }
+        */
     }
 }

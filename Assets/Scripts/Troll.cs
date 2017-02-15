@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts;
 using UnityEngine;
 
 public class Troll : MonoBehaviour
@@ -9,26 +8,27 @@ public class Troll : MonoBehaviour
     private const string AnimatorMoveY = "MoveY";
     private const string AnimatorIsWalking = "IsWalking";
 
+    private List<Vector2> _paths;
     private const float Speed = 0.02f;
     private Animator _animator;
-    private BoardManager _boardManager;
-    private Vector2 _direction;
     private float _idleTime;
     private bool _isDead;
     private bool _isMoving;
     private SpriteRenderer _spriteRenderer;
     private Vector2 _target;
 
-    private void Start()
+    public LayerMask ObstacleLayer;
+
+    public void Start()
     {
+        _paths = new List<Vector2> { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
         _target = transform.position;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
-        _boardManager = FindObjectOfType<BoardManager>();
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         if (_isDead)
         {
@@ -60,18 +60,22 @@ public class Troll : MonoBehaviour
             }
             else
             {
-                var paths = GetAdjacentPaths();
-                _direction = paths.ElementAt(Random.Range(0, paths.Count));
-                _target = position + _direction;
+                var direction = _paths.ElementAt(Random.Range(0, 4));
+                if (!CanWalkInDirection(direction))
+                {
+                    return;
+                }
+                _target = position + direction;
 
-                if (_direction == Vector2.left && !_spriteRenderer.flipX
-                    || _direction == Vector2.right && _spriteRenderer.flipX)
+
+                if (direction == Vector2.left && !_spriteRenderer.flipX
+                    || direction == Vector2.right && _spriteRenderer.flipX)
                 {
                     Flip();
                 }
 
-                _animator.SetFloat(AnimatorMoveX, _direction.x);
-                _animator.SetFloat(AnimatorMoveY, _direction.y);
+                _animator.SetFloat(AnimatorMoveX, direction.x);
+                _animator.SetFloat(AnimatorMoveY, direction.y);
                 _isMoving = true;
             }
         }
@@ -84,37 +88,20 @@ public class Troll : MonoBehaviour
         _spriteRenderer.flipX = !_spriteRenderer.flipX;
     }
 
-    private List<Vector2> GetAdjacentPaths()
+    // TODO could walk straight into a bomb... do we want to avoid that?
+    public bool CanWalkInDirection(Vector2 direction)
     {
-        var adjacentPaths = new List<Vector2>();
-
-        Vector2 currentPosition = transform.position;
-        currentPosition.x = Mathf.Round(currentPosition.x);
-        currentPosition.y = Mathf.Round(currentPosition.y);
-
-        AddPathIfAvailable(currentPosition, Vector2.up, adjacentPaths);
-        AddPathIfAvailable(currentPosition, Vector2.right, adjacentPaths);
-        AddPathIfAvailable(currentPosition, Vector2.down, adjacentPaths);
-        AddPathIfAvailable(currentPosition, Vector2.left, adjacentPaths);
-
-        return adjacentPaths;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, ObstacleLayer);
+        return !hit.collider;
     }
 
-    private void AddPathIfAvailable(Vector2 currentPosition, Vector2 direction, IList<Vector2> adjacentPaths)
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        if (IsPath(currentPosition + direction))
-            adjacentPaths.Add(direction);
-    }
-
-    private bool IsPath(Vector2 location)
-    {
-        var tile = _boardManager.GetTile(location);
-        return tile != null && tile.TileType == TileType.Path;
-    }
-
-    public Vector2 GetRoundedPosition()
-    {
-        return new Vector2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
+        if (other.CompareTag("Explosion"))
+        {
+            GetComponent<Collider2D>().enabled = false;
+            Die();
+        }
     }
 
     public void Die()

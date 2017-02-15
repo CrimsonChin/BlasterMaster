@@ -8,16 +8,16 @@ public class DropBomb : MonoBehaviour
     public GameObject Bomb;
     private Player _player;
 
-    void Awake()
+    public void Awake()
     {
         _player = GetComponent<Player>();
     }
 
-    void Update()
+    public void Update()
     {
-        if (Input.GetButtonDown("Fire1") && _player.ActiveBombs < _player.MaxBombCount)
+        if (Input.GetKeyDown(KeyCode.Space) && _player.ActiveBombs < _player.MaxBombCount)
         {
-            var bombGameObject = (GameObject)Instantiate(Bomb, new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), 25f), Quaternion.identity);
+            var bombGameObject = Instantiate(Bomb, new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), 25f), Quaternion.identity);
             var bomb = bombGameObject.GetComponent<Bomb>();
             bomb.Power = _player.ExplostionPower;
             _player.ActiveBombs++;
