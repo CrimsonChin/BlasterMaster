@@ -3,8 +3,8 @@ A simple exploration into writing a 2D Bomberman style game.
 
 ## TODO 
 - [ ] End of game screen
-- [ ] Player dies form bomb blast
-- [ ] player dies from enemy contact
+- [x] Player dies form bomb blast
+- [x] player dies from enemy contact
 - [ ] Powerups flash before disappearing
 - [ ] Multiplayer controls
 - [ ] Multiplayer "opt in screen"
