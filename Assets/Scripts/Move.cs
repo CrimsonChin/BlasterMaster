@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Move : MonoBehaviour
 {
@@ -53,24 +55,30 @@ public class Move : MonoBehaviour
     {
         if (other.CompareTag("Explosion"))
         {
-            Die();
+            StartCoroutine(Die());
         }
     }
     public void OnCollisionEnter2D(Collision2D other)
     {
         if (other.transform.CompareTag("Enemy"))
         {
-            Die();
+            StartCoroutine(Die());
         }
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
         _isDead = true;
         GetComponent<Collider2D>().enabled = false;
 
         InvokeRepeating("Flash", 0f, 0.1f);
-        Destroy(gameObject, 1f);
+        yield return new WaitForSeconds(1);
+        CancelInvoke("Flash");
+        _spriteRenderer.enabled = false;
+        _rigidbody.IsAwake() = false;
+
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(0);
     }
 
     private void Flash()
