@@ -75,7 +75,7 @@ public class Move : MonoBehaviour
         yield return new WaitForSeconds(1);
         CancelInvoke("Flash");
         _spriteRenderer.enabled = false;
-        _rigidbody.IsAwake() = false;
+        //_rigidbody.IsAwake() = false;
 
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(0);

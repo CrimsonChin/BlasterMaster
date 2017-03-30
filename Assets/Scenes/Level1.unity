@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 999998495}
   - component: {fileID: 999998494}
   - component: {fileID: 999998496}
-  - component: {fileID: 999998497}
+  - component: {fileID: 999998498}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -115,13 +115,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 999998493}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c7a0ede19b4ee646b9693f829faea1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Length: 15
-  Height: 15
+  Length: 5
+  Height: 5
   Block: {fileID: 1000010346493832, guid: a65063bf162da124db6a7e39dec9b175, type: 2}
   Grass: {fileID: 1000010245688556, guid: a775a63d718f5de45bf5eb6e3d614761, type: 2}
   Crate: {fileID: 1000012513445820, guid: 587a8c2b8dea16849880ed9d65772021, type: 2}
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1000012926657508, guid: c5e3f18ae53d94946a764ba9e69e5ce1, type: 2}
---- !u!114 &999998497
+--- !u!114 &999998498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -159,11 +159,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 999998493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f51c3a352f4ea114ea5ae86143444a1e, type: 3}
+  m_Script: {fileID: 11500000, guid: 56d52528e64b3a548b7ff146c9ec3bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Troll: {fileID: 1000013151881412, guid: 069addbbc968ad84e92356838b52352e, type: 2}
-  Enemies: []
+  SpeedPowerUp: {fileID: 1000012050776636, guid: 05d2a0ed3296d8a458dfd6dfbaba73c0,
+    type: 2}
+  BombRangePowerUp: {fileID: 1000010344515620, guid: 972e166b216c8c142a358dbd03a9c59f,
+    type: 2}
+  BombsHeldPowerUp: {fileID: 1000011237082270, guid: c8479b09e950a97469e91274a4ce41a9,
+    type: 2}
+  Block: {fileID: 1000010346493832, guid: a65063bf162da124db6a7e39dec9b175, type: 2}
+  Grass: {fileID: 1000010245688556, guid: a775a63d718f5de45bf5eb6e3d614761, type: 2}
+  Crate: {fileID: 1000012513445820, guid: 587a8c2b8dea16849880ed9d65772021, type: 2}
+  Camera: {fileID: 1245316147}
 --- !u!1 &1245316147
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,31 +5,27 @@
 [RequireComponent(typeof(Lootable))]
 public class Tile : MonoBehaviour
 {
-    public bool Destroyable;
+	public bool IsPath;
+	public bool Destroyable;
+	public GameObject PowerUp;
 
-    public void AttemptDestroy()
-    {
-        if (!Destroyable)
-            return;
+	public void AttemptDestroy()
+	{
+		if (!Destroyable)
+			return;
 
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.enabled = false;
-        }
+		var spriteRenderer = GetComponent<SpriteRenderer>();
+		spriteRenderer.enabled = false;
 
-        var boxCollider2D = GetComponent<BoxCollider2D>();
-        if (boxCollider2D != null)
-        {
-            boxCollider2D.enabled = false;
-        }
+		var boxCollider2D = GetComponent<BoxCollider2D>();
+		boxCollider2D.enabled = false;
 
-        var lootable = GetComponent<Lootable>();
-        if (lootable)
-        {
-            lootable.GenerateLoot();
-        }
+		if (PowerUp != null)
+		{
+			var loot = Instantiate(PowerUp, transform.position, Quaternion.identity);
+			Destroy(loot, 3f);
+		}
 
-        Destroyable = false;
-    }
+		Destroyable = false;
+	}
 }
