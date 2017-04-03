@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public static class KnuthShuffleExtensions
 {
 	private static readonly Random Rand = new Random();
 
 	/// <summary>
-	/// Knuth shuffle algorithm :: courtesy of Wikipedia :)
+	/// Knuth shuffle algorithm
 	/// </summary>
 	public static void KnuthShuffle<T>(this T[] items)
 	{
