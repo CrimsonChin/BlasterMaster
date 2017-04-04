@@ -106,7 +106,10 @@ namespace Assets.Scripts
 		{
 			const int safeZone = 3;
 			var clearTileList = clearTileVectors as List<Vector2>;
-			clearTileList?.RemoveAll(path => path.x < safeZone && path.y < safeZone);
+			if (clearTileList != null && clearTileList.Any())
+			{
+				clearTileList.RemoveAll(path => path.x < safeZone && path.y < safeZone);
+			}
 		}
 
 		private void DistributeEnemies(LevelConfiguration configuration, ICollection<Vector2> clearTileStack)
