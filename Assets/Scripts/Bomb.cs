@@ -23,10 +23,12 @@ namespace Assets.Scripts
         private CircleCollider2D _collider;
 
         private bool _exploded;
+        private AudioManager _audioManager;
 
         public void Start()
         {
             _player = FindObjectOfType<Player>();
+            _audioManager = FindObjectOfType<AudioManager>();
 
             _collider = GetComponent<CircleCollider2D>();
 
@@ -77,6 +79,7 @@ namespace Assets.Scripts
 
         private void Detonate()
         {
+            _audioManager.PlayExplosion();
             _player.ActiveBombs--;
             _exploded = true;
 
