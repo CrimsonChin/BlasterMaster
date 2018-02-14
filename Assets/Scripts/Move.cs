@@ -71,11 +71,14 @@ public class Move : MonoBehaviour
         _isDead = true;
         GetComponent<Collider2D>().enabled = false;
 
+        var audioManager = FindObjectOfType<AudioManager>();
+        audioManager.PlayLose();
+
         InvokeRepeating("Flash", 0f, 0.1f);
         yield return new WaitForSeconds(1);
         CancelInvoke("Flash");
+
         _spriteRenderer.enabled = false;
-        //_rigidbody.IsAwake() = false;
 
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(0);

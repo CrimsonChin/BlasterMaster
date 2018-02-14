@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+
+// TODO remove
 public class BoardManager : MonoBehaviour
 {
     public int Length = 5;

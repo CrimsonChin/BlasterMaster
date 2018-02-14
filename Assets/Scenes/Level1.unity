@@ -154,8 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31816008b827ca247b1bb28895c5fb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplosiAudioClip: {fileID: 8300000, guid: 6676bc9f398dd8344ab86dcf25fd891e, type: 3}
+  ExplosionAudioClip: {fileID: 8300000, guid: 6676bc9f398dd8344ab86dcf25fd891e, type: 3}
   LoseAudioClip: {fileID: 8300000, guid: e609fe5de867cb949afef4493ee5d15e, type: 3}
+  WinAudioClip: {fileID: 8300000, guid: 355aa298625413a46ac30206a6bcfa67, type: 3}
 --- !u!82 &324657590
 AudioSource:
   m_ObjectHideFlags: 0
@@ -244,10 +245,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 999998495}
-  - component: {fileID: 999998494}
   - component: {fileID: 999998496}
   - component: {fileID: 999998498}
   - component: {fileID: 999998497}
+  - component: {fileID: 999998494}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -261,17 +262,11 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 999998493}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c7a0ede19b4ee646b9693f829faea1d, type: 3}
+  m_Script: {fileID: 11500000, guid: f51c3a352f4ea114ea5ae86143444a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Length: 5
-  Height: 5
-  Block: {fileID: 1000010346493832, guid: a65063bf162da124db6a7e39dec9b175, type: 2}
-  Grass: {fileID: 1000010245688556, guid: a775a63d718f5de45bf5eb6e3d614761, type: 2}
-  Crate: {fileID: 1000012513445820, guid: 587a8c2b8dea16849880ed9d65772021, type: 2}
-  Camera: {fileID: 1245316147}
 --- !u!4 &999998495
 Transform:
   m_ObjectHideFlags: 0

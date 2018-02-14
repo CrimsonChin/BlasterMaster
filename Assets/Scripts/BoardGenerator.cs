@@ -26,13 +26,13 @@ namespace Assets.Scripts
 		{
 			var levelConfiguration = new LevelConfiguration
 			{
-				PlayableBoardHeight = 15,
-				PlayableBoardWidth = 15,
+				PlayableBoardHeight = 5,
+				PlayableBoardWidth = 5,
 				BombRangePowerUpCount = 2,
 				BombsHeldPowerUpCount = 2,
 				SpeedPowerUpCount = 2,
-				CrateCount = 50,
-				EnemyCount = 5
+				CrateCount = 5,
+				EnemyCount = 1
 			};
 
 			var clearTileVectors = PrepareBoard(levelConfiguration);

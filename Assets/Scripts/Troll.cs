@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class Troll : MonoBehaviour
 {
@@ -9,7 +12,6 @@ public class Troll : MonoBehaviour
     private const string AnimatorIsWalking = "IsWalking";
 
     private List<Vector2> _paths;
-    private const float Speed = 0.02f;
     private Animator _animator;
     private float _idleTime;
     private bool _isDead;
@@ -17,7 +19,10 @@ public class Troll : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Vector2 _target;
 
+    public float Speed = 0.02f;
+
     public LayerMask ObstacleLayer;
+
 
     public void Start()
     {
@@ -100,11 +105,11 @@ public class Troll : MonoBehaviour
         if (other.CompareTag("Explosion"))
         {
             GetComponent<Collider2D>().enabled = false;
-            Die();
+            StartCoroutine(Die());
         }
     }
 
-    public void Die()
+    private IEnumerator Die()
     {
         _isDead = true;
 
@@ -112,8 +117,40 @@ public class Troll : MonoBehaviour
         _animator.SetFloat(AnimatorMoveX, 0);
         _animator.SetFloat(AnimatorMoveY, -1);
 
-        InvokeRepeating("Flash", 0f, 0.1f);
+        StartCoroutine(Flash2(0.25f, 0.2f));
+
+        // QQQ use callbacks to solve timing issues?  
+        yield return new WaitForSeconds(2);
+
+        var enemyManager = FindObjectOfType<EnemyManager>();
+        if (enemyManager != null)
+        {
+            var enemyCount = enemyManager.RemainingEnemyCount();
+            if(enemyCount == 0)
+            {
+                var audioManager = FindObjectOfType<AudioManager>();
+                audioManager.PlayWin();
+
+                yield return new WaitForSeconds(4);
+                SceneManager.LoadScene("Win");
+            }
+        }
+
         Destroy(gameObject, 1f);
+    }
+    IEnumerator Flash2(float time, float intervalTime)
+    {
+        var elapsedTime = 0f;
+        
+        while (elapsedTime < time)
+        {
+            _spriteRenderer.enabled = !_spriteRenderer.enabled;
+            elapsedTime += Time.deltaTime;
+
+            yield return new WaitForSeconds(intervalTime);
+        }
+
+        _spriteRenderer.enabled = false;
     }
 
     public void Flash()

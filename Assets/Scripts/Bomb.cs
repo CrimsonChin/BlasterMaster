@@ -58,16 +58,14 @@ namespace Assets.Scripts
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, i, ObstacleLayer);
                 if (!hit.collider)
                 {
-                    Vector3 a = position + direction * i;
-                    a.z = 10;
-                    var prefab = GetExplosionPrefab(direction, i == Power);
-                    Instantiate(prefab, a, Quaternion.identity);
+                    GenerateBlastTrail(direction, position, i);
                 }
                 else
                 {
                     var tile = hit.transform.GetComponent<Tile>();
                     if (tile != null && tile.Destroyable)
                     {
+                        GenerateBlastTrail(direction, position, i);
                         tile.AttemptDestroy();
                     }
                     break;
@@ -75,6 +73,14 @@ namespace Assets.Scripts
 
                 yield return new WaitForSeconds(0);
             }
+        }
+
+        private void GenerateBlastTrail(Vector2 direction, Vector2 position, int i)
+        {
+            Vector3 a = position + (direction * i);
+            a.z = 10;
+            var prefab = GetExplosionPrefab(direction, i == Power);
+            Instantiate(prefab, a, Quaternion.identity);
         }
 
         private void Detonate()

@@ -2,9 +2,11 @@
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioClip ExplosiAudioClip;
+    public AudioClip ExplosionAudioClip;
 
     public AudioClip LoseAudioClip;
+
+    public AudioClip WinAudioClip;
 
     private AudioSource _audioSource;
 
@@ -13,18 +15,19 @@ public class AudioManager : MonoBehaviour
 	    _audioSource = GetComponent<AudioSource>();
 	}
 	
-	void Update ()
-	{  	
-	}
-
     public void PlayExplosion()
     {
-        _audioSource.PlayOneShot(ExplosiAudioClip);
+        _audioSource.PlayOneShot(ExplosionAudioClip);
     }
 
     public void PlayLose()
     {
         _audioSource.PlayOneShot(LoseAudioClip);
+    }
+
+    public void PlayWin()
+    {
+        _audioSource.PlayOneShot(WinAudioClip);
     }
 }
 
