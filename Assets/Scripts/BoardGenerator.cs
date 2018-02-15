@@ -32,7 +32,7 @@ namespace Assets.Scripts
 				BombsHeldPowerUpCount = 2,
 				SpeedPowerUpCount = 2,
 				CrateCount = 5,
-				EnemyCount = 1
+				EnemyCount = 2
 			};
 
 			var clearTileVectors = PrepareBoard(levelConfiguration);
@@ -119,6 +119,7 @@ namespace Assets.Scripts
 				throw new InvalidOperationException("There is not enough space to distribute the enemies.  Good maths!");
 			}
 
+		    var enemyManager = FindObjectOfType<EnemyManager>();
 			var enemyCount = configuration.EnemyCount;
 			foreach (var vector2 in clearTileStack)
 			{
@@ -128,6 +129,8 @@ namespace Assets.Scripts
 				}
 				Instantiate(Troll, new Vector3(vector2.x, vector2.y, 10), Quaternion.identity);
 				enemyCount--;
+			    enemyManager.EnemyCount++;
+
 			}
 		}
 

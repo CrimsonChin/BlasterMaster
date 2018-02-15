@@ -117,26 +117,17 @@ public class Troll : MonoBehaviour
         _animator.SetFloat(AnimatorMoveX, 0);
         _animator.SetFloat(AnimatorMoveY, -1);
 
-        StartCoroutine(Flash2(0.25f, 0.2f));
+        StartCoroutine(Flash2(0.25f, 0.2f)); // this is rubbish
 
-        // QQQ use callbacks to solve timing issues?  
         yield return new WaitForSeconds(2);
 
         var enemyManager = FindObjectOfType<EnemyManager>();
         if (enemyManager != null)
         {
-            var enemyCount = enemyManager.RemainingEnemyCount();
-            if(enemyCount == 0)
-            {
-                var audioManager = FindObjectOfType<AudioManager>();
-                audioManager.PlayWin();
-
-                yield return new WaitForSeconds(4);
-                SceneManager.LoadScene("Win");
-            }
+            enemyManager.HandleDeath();
         }
 
-        Destroy(gameObject, 1f);
+        Destroy(gameObject);
     }
     IEnumerator Flash2(float time, float intervalTime)
     {
